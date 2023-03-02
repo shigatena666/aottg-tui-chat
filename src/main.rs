@@ -6,14 +6,8 @@ mod utils;
 // Import necessary modules
 use networking::socket::udp::UdpClient;
 use networking::socket::client::Client;
-use networking::serialization::packetserializer::PacketSerializer;
+use networking::serialization::packetserializer::{PacketSerializer, AOTTG_HEADER};
 
-// Define a constant representing a query to send to the server
-pub const AOTTG_SERVER_LIST_QUERY: [u8; 44] = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ];
 
 fn main() {
 

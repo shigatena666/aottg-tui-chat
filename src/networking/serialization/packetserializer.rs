@@ -3,6 +3,11 @@ use crate::utils::streambuffer::StreamBuffer;
 // Define a constant representing a query to send to the server
 const CHANNEL: u8 = 2;
 
+// Define a constant representing a query to send to the server
+pub const AOTTG_HEADER: [u8; 24] = [
+    255, 255, 0, 1, 0, 0, 0, 62, 14, 182, 52, 81, 2, 255, 1, 4, 0, 0, 0, 44, 0, 0, 0, 1,
+    ];
+
 pub struct PacketSerializer {
     pub sequence: StreamBuffer,
 }
@@ -33,6 +38,7 @@ impl PacketSerializer {
         Self::serialize(1200, &mut array[2..], &mut 2);
 
         // Write the remaining bytes to the byte array
+        array[0] = 0;
         array[4] = 0;
         array[5] = 0;
         array[6] = 128;
@@ -45,7 +51,11 @@ impl PacketSerializer {
         array[27] = 2;
         array[31] = 2;
 
+        let bytes = array.to_vec();
+        let mut header = AOTTG_HEADER.to_vec();
+        header.extend(bytes);
+
         // Convert the byte array to a StreamBuffer
-        StreamBuffer::from(array.to_vec())
+        StreamBuffer::from(header)
     }
 }
